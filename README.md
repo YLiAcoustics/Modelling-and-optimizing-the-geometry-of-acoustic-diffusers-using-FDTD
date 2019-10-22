@@ -1,5 +1,5 @@
 # modelling-and-optimizing-the-geometry-of-acoustic-diffusers-using-FDTD
-This repository contains the MATLAB files for modelling and optimizing the geometry of acoustic diffusers using Finite-Difference Time-Domain method, as part of the outcomes of my Master's dissertation
+This repository contains the pdf and MATLAB files for modelling and optimizing the geometry of acoustic diffusers using Finite-Difference Time-Domain method, as the outcomes of my Master's dissertation.
 
 The .m files should be grouped and used together according to their functions:
 "Yuqing_dc_calculation.m" - calls "Yuqing_FDTD_func.m" - calls "Yuqing_qrs.m"
