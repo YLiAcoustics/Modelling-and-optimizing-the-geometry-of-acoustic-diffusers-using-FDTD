@@ -5,6 +5,7 @@
 %                  diffusion using FDTD room acoustics modelling in 2D. It
 %                  returns a matrix of recorded signals from all receivers
 %                  (1 column for each reciever).
+% Last edited: Yuqing Li, 24/01/2022
 
 function rec = Yuqing_FDTD_func(sim_opts,sim_par,diff_par,diff_opts,welldepth)    
 
@@ -120,7 +121,7 @@ assert((1<li<N+2) && (1<mi<M+2), 'source position beyond simulation domain');
 % 3.2.2 source type
 % a sine wave signal
 if strcmp(sim_opts.source_type,'sin')
-    x = 1e5*sin(2*pi*600*[0:dur*SR-1]/SR);
+    x = 1e5*sin(2*pi*600*[0:round(dur*SR)-1]/SR);   % Edited: Yuqing Li, 24/01/2022
 % impulse
 elseif strcmp(sim_opts.source_type,'point')                         % a point impulse
     u1(mi,li) = 1e5;
@@ -172,8 +173,9 @@ tic
 
 for n = 1:Nf
     % input signal
-    if strcmp(sim_opts.incidence,'sin')
-         u1(mi,li) = u1(mi,li)+x(n);
+    if strcmp(sim_opts.source_type,'sin')
+%          u1(mi,li) = u1(mi,li)+x(n);
+          u1(mi,li) = x(n);           % Edited: Yuqing Li, 24/01/2022
     end
     
     % update equation (frequency-independent impedance)
