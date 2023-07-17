@@ -1,7 +1,7 @@
 %
 % Program info
 % Program author: Yuqing Li, August 2019
-% Program details: This matlab script calls the function Yuqing_FDTD_func.m
+% Program details: This matlab script calls the function FDTD_func.m
 % to measure the polar response for a diffuser with a known well depth sequence. 
 % It calculate the diffusion coefficient and generate a polar plot for a known well depth sequence. 
 % The user can test the performance of any type of diffuser over the bandwidth of interest.
@@ -59,7 +59,7 @@ sim_par.SR = round(sim_par.Np*sim_par.fmax/sim_par.lambda);                     
 sim_par.T = 1/sim_par.SR;                                                       % time step
 sim_par.hmin = sim_par.c*sim_par.T/sim_par.lambda;                              % minimal space grid (for stability)
 diff_par.maxwl = sim_par.c/diff_par.desfreq;                                    % maximum wavelength (corresponding to design frequency)
-diff_par.maxwd = diff_par.maxwl/2/diff_par.nwell*max(Yuqing_qrs(diff_par.nwell,diff_par.period));    % maximum QRD well depth
+diff_par.maxwd = diff_par.maxwl/2/diff_par.nwell*max(qrs(diff_par.nwell,diff_par.period));    % maximum QRD well depth
 diff_par.theta = deg2rad([-90:diff_par.reso:90]');                              % angular distribution of receivers
 sim_par.ltheta = length(diff_par.theta);                                        % number of receivers
 
@@ -71,7 +71,7 @@ assert(diff_par.w0*diff_par.nwell*diff_par.period<2*diff_par.rR,'Diffuser size e
 if strcmp(sim_opts.diffuser_type,'random')   % DO NOT EDIT % generate random well depth sequence
     welldepth = diff_par.maxwd*rand(diff_par.nwell*diff_par.period,1);
 elseif strcmp(sim_opts.diffuser_type,'QRD')  % DO NOT EDIT % generate QRD well depth sequence
-    welldepth = diff_par.maxwl/2*Yuqing_qrs(diff_par.nwell,diff_par.period)/diff_par.nwell;
+    welldepth = diff_par.maxwl/2*qrs(diff_par.nwell,diff_par.period)/diff_par.nwell;
 elseif strcmp(sim_opts.diffuser_type,'plane')   % DO NOT EDIT % generate plane surface
     welldepth = zeros(diff_par.nwell*diff_par.period,1);
 elseif strcmp(sim_opts.diffuser_type,'test')  % EDIT % user-defined well depth sequence
@@ -86,8 +86,8 @@ end
 
 %%%% DO NOT EDIT %%%%
 %% polar response measurement
-h1 = Yuqing_FDTD_func(sim_opts,sim_par,diff_par,diff_opts(1),welldepth);             % test 1: with diffuser
-h2 = Yuqing_FDTD_func(sim_opts,sim_par,diff_par,diff_opts(2),welldepth);             % test 2: without diffuser
+h1 = FDTD_func(sim_opts,sim_par,diff_par,diff_opts(1),welldepth);             % test 1: with diffuser
+h2 = FDTD_func(sim_opts,sim_par,diff_par,diff_opts(2),welldepth);             % test 2: without diffuser
 IR = h1-h2;                                                                          % polar response matrix of the diffuser(1 column for each receiver)
 
 % calculate sound pressure levels at reach receiver

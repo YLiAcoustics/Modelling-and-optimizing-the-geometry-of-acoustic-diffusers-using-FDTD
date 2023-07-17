@@ -6,7 +6,7 @@
 %                  returns a matrix of recorded signals from all receivers
 %                  (1 column for each reciever).
 
-function rec = Yuqing_opti_FDTD_func(sim_opts,sim_par,diff_par,diff_opts,welldepth)    
+function rec = opti_FDTD_func(sim_opts,sim_par,diff_par,diff_opts,welldepth)    
 
 %% Define Parameters
 % 1. copy over parameters
@@ -41,7 +41,7 @@ M = floor(Ly/hmin)-1;                                  % number of grid points t
 % diffuser geometry parameters
 nw = length(welldepth);                                 % number of wells
 w = round(w0/hmin);                                     % well width in number of grid points
-maxwd = c/desfreq/2/length(welldepth)*max(Yuqing_qrs(length(welldepth),1));           % 
+maxwd = c/desfreq/2/length(welldepth)*max(qrs(length(welldepth),1));           % 
 MAXWD = round(maxwd/hmin);                              % maximum well depth in number of grid points
 H = MAXWD+3;                                            % maximum bar height/diffuser area height (at least 3 grid points to make sure the inner/outer point determiner works)
 

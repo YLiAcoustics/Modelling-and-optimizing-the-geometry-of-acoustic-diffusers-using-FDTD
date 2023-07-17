@@ -2,19 +2,19 @@
 % Program info
 % Program author: Yuqing Li, August 2019
 % Program details: This matlab script performs diffuser geometry optimization by searching for minimum
-% (1-dc) value returned by function Yuqing_opti_dc_calculation_func.m for the test
+% (1-dc) value returned by function opti_dc_calculation_func.m for the test
 % frequency, outputs maximum dc and the corresponding well depth sequence.
 
 %%%% NOTICE:
 % The optimization algorithm in this script only allows one input variable,
-% 'welldepth', to be sent to the objective function Yuqing_opti_dc_calculation.m. 
+% 'welldepth', to be sent to the objective function opti_dc_calculation.m. 
 % Therefore, the type of frequency range for optimization 'sys_opts.freq_range'
-% and the target 1/3 octave center frequency 'sim_par.tarfreq' need to be set in Yuqing_opti_dc_calculation_func.m.
+% and the target 1/3 octave center frequency 'sim_par.tarfreq' need to be set in opti_dc_calculation_func.m.
 
 % If 'sys_opts.freq_range' is set to 'wideband', there is no need to edit 'sim_par.tarfreq'.
 
 % Also, if the user would like to change the diffuser design frequency, remember to change both 'desfreq' in
-% this script and 'diff_par.desfreq'  in Yuqing_opti_dc_calculation_func.m.
+% this script and 'diff_par.desfreq'  in opti_dc_calculation_func.m.
 
 close all
 clear all
@@ -42,10 +42,10 @@ k = 20;                                         % number of start points
 if strcmp(dtype,'random')
     welldepth = c/desfreq/2*rand(nwell*period,1);
 elseif strcmp(dtype,'QRD')
-    welldepth = c/desfreq/2*Yuqing_qrs(nwell,1)/nwell;
+    welldepth = c/desfreq/2*qrs(nwell,1)/nwell;
 end 
 maxwd = max(welldepth);
-dc0 = 1-Yuqing_opti_dc_calculation_func(welldepth);             % initial diffusion coefficient
+dc0 = 1-opti_dc_calculation_func(welldepth);             % initial diffusion coefficient
 
 
 % use multistart to find global minimum
@@ -54,7 +54,7 @@ opts = optimoptions(@fmincon,'Algorithm','sqp');            % use fincon to sear
                                                             % is constrained by that of the corresponding QRD)
 tic
 problem = createOptimProblem('fmincon','objective',...
-    @Yuqing_opti_dc_calculation_func,'x0',welldepth,'lb',zeros(length(welldepth),1),'ub',maxwd*ones(length(welldepth),1),'options',opts);
+    @opti_dc_calculation_func,'x0',welldepth,'lb',zeros(length(welldepth),1),'ub',maxwd*ones(length(welldepth),1),'options',opts);
 ms = MultiStart('Display','iter','FunctionTolerance',1e-4,'StartPointsToRun','bounds-ineqs','UseParallel',true);      
 
 % optimization result

@@ -1,10 +1,10 @@
 %
 % Program info
 % Program author: Yuqing Li, August 2019
-% Program details: This matlab function takes the input well depth sequence from Yuqing_opti and pass it 
-% to function Yuqing_opti_FDTD_func.m to calculate the diffusion coefficient dc. 
-% It returns 1-dc to Yuqing_opti.m for optimization.
-function oneminusdc = Yuqing_opti_dc_calculation_func(welldepth)
+% Program details: This matlab function takes the input well depth sequence from opti.m and pass it 
+% to function opti_FDTD_func.m to calculate the diffusion coefficient dc. 
+% It returns 1-dc to opti.m for optimization.
+function oneminusdc = opti_dc_calculation_func(welldepth)
 
 %%%% EDIT %%%%
 %% global options
@@ -52,8 +52,8 @@ diff_opts(2) = diff_opts(1);
 diff_opts(2).diffuser_on = 0;
 
 %% polar response measurement
-h1 = Yuqing_opti_FDTD_func(sim_opts,sim_par,diff_par,diff_opts(1),welldepth);
-h2 = Yuqing_opti_FDTD_func(sim_opts,sim_par,diff_par,diff_opts(2),welldepth);
+h1 = opti_FDTD_func(sim_opts,sim_par,diff_par,diff_opts(1),welldepth);
+h2 = opti_FDTD_func(sim_opts,sim_par,diff_par,diff_opts(2),welldepth);
 IR = h1-h2;                                              % the receiver output matrix (Nf rows, nrec columns
 
 

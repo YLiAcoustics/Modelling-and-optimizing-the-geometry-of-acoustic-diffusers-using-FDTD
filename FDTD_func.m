@@ -7,7 +7,7 @@
 %                  (1 column for each reciever).
 % Last edited: Yuqing Li, 24/01/2022
 
-function rec = Yuqing_FDTD_func(sim_opts,sim_par,diff_par,diff_opts,welldepth)    
+function rec = FDTD_func(sim_opts,sim_par,diff_par,diff_opts,welldepth)    
 
 %% Define Parameters
 % 1. copy over parameters
